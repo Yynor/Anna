@@ -17,17 +17,21 @@ namespace Market
         public string ProductArticl = null;
         public int Id = 0;
         public int Role1;
+        public string Art;
         public ChangeItemWindow(string productArticle,int ID,int role)
         {
             InitializeComponent();
+            Art = productArticle;
             Id = ID;
             Role1 = role;
             ProductArticl = productArticle;
             BackBtn.Click += BackBtn_Click;
             ContentBrowsBtw.Click += ContentBrowsBtw_Click;
             SaveProductSettingsBtn.Click += SaveProductSettingsBtn_Click;
+            
             InputDataForRedaction();
         }
+        
         public void InputDataForRedaction()
         {
             string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
@@ -50,6 +54,7 @@ namespace Market
                         ProductDiscountBox.Text=Convert.ToString(reader.GetInt32(7));
                         ProductPriceBox.Text= Convert.ToString(reader.GetFloat(6));
                         DescriptionTextBox.Text = reader.GetString(2);
+                        
                         try{
                         byte[] productPhoto = (byte[])reader["ProductPhoto"];
                         using (var stream = new MemoryStream(productPhoto))
@@ -83,6 +88,7 @@ namespace Market
 
         private void SaveProductSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
+          
             string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -97,6 +103,7 @@ namespace Market
                     int productDiscount = int.Parse(ProductDiscountBox.Text);
                     int productPrice = int.Parse(ProductPriceBox.Text);
                     string descriptionText = DescriptionTextBox.Text;
+                    
 
                     if (productQuantity < 0)
                         throw new ArgumentOutOfRangeException(nameof(productQuantity), "Количество продукта не может быть отрицательным");
@@ -127,6 +134,7 @@ namespace Market
                         command.Parameters.AddWithValue("@ProductDiscount", productDiscount);
                         command.Parameters.AddWithValue("@ProductQuantity", productQuantity);
                         command.Parameters.AddWithValue("@ProductArticleNumber", ProductArticl); // Замените на нужный номер
+                        command.Parameters.AddWithValue("@art", ArtBox.Text); // Замените на нужный номер
 
                         command.ExecuteNonQuery();
                         this.Hide();
