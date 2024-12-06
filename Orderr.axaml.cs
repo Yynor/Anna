@@ -61,10 +61,11 @@ namespace Market
             PickUpp.Text = address;
         }
 
-        private void BntMakeZakaz_Click(object? sender, RoutedEventArgs e)
+        private async void BntMakeZakaz_Click(object? sender, RoutedEventArgs e)
         {
             
-            new OrderConfirmWindow(allPrice,PickUpp.Text).Show();
+            var OrgerConfirm = new OrderConfirmWindow(allPrice,PickUpp.Text);
+            await OrgerConfirm.ShowDialog(this);
             
 
         }

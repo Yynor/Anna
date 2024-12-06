@@ -17,7 +17,7 @@ namespace Market{
             Pick.Text = pickup;
         }
         private void ConfirmOrder_Click(object sender, RoutedEventArgs e){
-
+            this.Close();
         }
 
 

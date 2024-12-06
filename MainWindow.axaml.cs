@@ -33,7 +33,13 @@ namespace Market
            Scenary= scenary;
             if(role == 1){
                 StoreBtn.IsVisible=false;
+                AddButton.IsVisible=true;
             }
+            if(role == 3){
+                StoreBtn.IsVisible=true;
+                AddButton.IsVisible=false;
+            }
+            
 
            
         if(scenary!=null)
@@ -48,7 +54,7 @@ namespace Market
            totototo = Products;
            FilteredProducts = new List<Product>(Products); // Изначально все продукты видимы
            DataContext = this; // Устанавливаем контекст данных
-           fff.ItemsSource = FilteredProducts; // Устанавливаем источник данных для ListBox
+           Fff.ItemsSource = FilteredProducts; // Устанавливаем источник данных для ListBox
             
 
             CBoxMaker.Items.Add("По умолчанию");           
@@ -59,7 +65,6 @@ namespace Market
             CBoxMaker.Items.Add("Solaris");
             CBoxMaker.Items.Add("Galaxy");
             CBoxMaker.Items.Add("Tefal");
-            CBoxMaker.Items.Add("По умолчанию");
 
 
             CBoxCategory.Items.Add("По умолчанию");
@@ -113,7 +118,7 @@ namespace Market
         Console.WriteLine($"Ошибка: {ex.Message}");
     }
 
-    fullUserName.Text = fullName; // Обновляем текст
+    FullUserName.Text = fullName; // Обновляем текст
 }
        
       private void ButtonStorage_Click(object sender, RoutedEventArgs e)
@@ -123,6 +128,13 @@ namespace Market
         new Orderr(Idd,Role,listt).Show();
         this.Close();
        }
+       private void AddButtin_Click(object sender, RoutedEventArgs e)
+      {
+        this.Hide();
+        new AddNewItem(Idd,Role,listt).Show();
+        this.Close();
+      }
+       
         private async void fullUserNameTextBox_Pressed(object sender, PointerPressedEventArgs e)
         {
           var mb = new MBoxExitAsc(Idd,Role);
@@ -170,6 +182,7 @@ namespace Market
                                 productName, productDescription, productCategory, productPhoto,
                                 productManufacturer, productCost, productDiscountAmount, productQuantityInStock, productStatus);
                             list.Add(product);
+                            Console.WriteLine("новый продукт должнен был быть отображен");
                         }
                     }
                 }
@@ -276,7 +289,7 @@ namespace Market
 
             // Обновление списка
             FilteredProducts = filtered.ToList();
-            fff.ItemsSource = FilteredProducts; // Обновляем источник данных для ListBox
+            Fff.ItemsSource = FilteredProducts; // Обновляем источник данных для ListBox
         }
     }
 }

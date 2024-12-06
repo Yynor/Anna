@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Market"
         x:Class="Market.LoginWindow"
-        Title="Market" WindowStartupLocation="CenterScreen">
+        Title="Market" WindowStartupLocation="CenterScreen"
+        Width="700" Height="500">
         
      <Window.Styles>
         <Style Selector="Button">

@@ -19,6 +19,9 @@ build_property.ProjectDir = /Users/new/Desktop/Anna/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
+[/Users/new/Desktop/Anna/AddNewItem.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/new/Desktop/Anna/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
