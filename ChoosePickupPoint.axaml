@@ -11,8 +11,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="Выбрать" x:Name="SelectBtn" Foreground="White" Background="#76E383" Width="100" Height="40" VerticalAlignment="Top" Margin="10" />
-        <Button Grid.Row="0" Content="Выйти" x:Name="ExitBtn" Foreground="White" Background="#76E383" Width="100" Height="40" VerticalAlignment="Top" Margin="120,0,0,10" />
+        <Button Grid.Row="0" Content="Выбрать" x:Name="SelectBtn" Foreground="White" Background="#76E383" Width="100" Height="40" VerticalAlignment="Top" Margin="10" HorizontalAlignment="Left" />
+        <Button Grid.Row="0" Content="Выйти" x:Name="ExitBtn" Foreground="White" Background="#76E383" Width="100" Height="40" VerticalAlignment="Top" Margin="10" HorizontalAlignment="Right"/>
         
         
         <ListBox Grid.Row="1" x:Name="AddressListBox" Margin="10" Background="LightGray"/>

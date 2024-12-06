@@ -18,8 +18,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Назад" x:Name="BackBtn" HorizontalAlignment="Left" Margin="20"/>
-            <TextBlock Grid.Column="0" Text="ФИО" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-        </Grid>
+             </Grid>
 
         <Grid Grid.Row="1" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -89,7 +88,7 @@
               </StackPanel>
             </Grid>
         <Grid Grid.Row="4" HorizontalAlignment="Center">
-            <Button x:Name="SaveProductSettingsBtn" Content="Сохранить изменения" Width="250"/>
+            <Button x:Name="SaveProductSettingsBtn" Content="Сохранить изменения" Width="250"  Margin="0,0,0,10"/>
         </Grid>
     </Grid>
 </Window>

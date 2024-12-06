@@ -8,13 +8,15 @@ using System.IO;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
-
+using Avalonia.Media;
+using System.Linq;
 
 namespace Market
 {
+    
     public partial class Orderr : Window
     {
-        public int COUNT=1;
+        public float allPrice = 0;
         public List<UserItemStorage> Products { get; set; }
         public int Role { get; set; }
         public int Idd { get; set; }
@@ -24,46 +26,54 @@ namespace Market
         {
             InitializeComponent();
 
-            lll = listik;
+            lll.AddRange(listik);
             Idd = id;
             Role = role;
 
             Products = FillFromListic();
             // Устанавливаем источник данных для ListBox
             fff.ItemsSource = Products;
-            
         }
-        private void Button_Click(object sender, RoutedEventArgs e){
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             this.Hide();
-            new MainWindow(Idd,Role).Show();
+            new MainWindow(Idd, Role, lll).Show();
             this.Close();
         }
+
         private void Pressed(object sender, PointerPressedEventArgs e)
         {
             OpenChoosePickupPoint();
         }
-        private void OpenChoosePickupPoint()
-       {
-           var choosePickupPointWindow = new ChoosePickupPoint();
-           choosePickupPointWindow.AddressSelected += OnAddressSelected; // Подписываемся на событие
-           choosePickupPointWindow.ShowDialog(this); // Открываем окно как модальное
-       }
-       private void OnAddressSelected(int id, string address)
-       {
-           // Обработка выбранного адреса
-           Console.WriteLine($"Выбранный адрес: {address}, ID: {id}");
-           PickUpp.Text = address;
-           // Здесь вы можете выполнить дополнительные действия, например, сохранить адрес или обновить интерфейс
-       }
-      private void BntMakeZakaz_Click(object? sender, RoutedEventArgs e){
 
-      }
+        private void OpenChoosePickupPoint()
+        {
+            var choosePickupPointWindow = new ChoosePickupPoint();
+            choosePickupPointWindow.AddressSelected += OnAddressSelected; // Подписываемся на событие
+            choosePickupPointWindow.ShowDialog(this); // Открываем окно как модальное
+        }
+
+        private void OnAddressSelected(int id, string address)
+        {
+            // Обработка выбранного адреса
+            Console.WriteLine($"Выбранный адрес: {address}, ID: {id}");
+            PickUpp.Text = address;
+        }
+
+        private void BntMakeZakaz_Click(object? sender, RoutedEventArgs e)
+        {
+            
+            new OrderConfirmWindow(allPrice,PickUpp.Text).Show();
+            
+
+        }
 
         private List<UserItemStorage> FillFromListic()
         {
             List<UserItemStorage> list = new List<UserItemStorage>();
-            string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
-
+            string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
+            int i = 0;
             foreach (string datab in lll)
             {
                 try
@@ -76,11 +86,13 @@ namespace Market
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
+                            
                             if (reader.Read())
                             {
                                 string name = reader.GetString(0);
                                 string discr = reader.GetString(1);
                                 int price = reader.GetInt32(2);
+                                i+=price;
                                 Bitmap image = GetImage(reader); // Получаем изображение
                                 int count = reader.GetInt32(4);
 
@@ -90,60 +102,111 @@ namespace Market
                         }
                     }
                 }
-                                catch (Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Ошибка: {ex.Message}");
                 }
             }
+            GeneralPrice.Text = Convert.ToString(i);
+            allPrice = i;
             return list;
         }
 
-       public Bitmap GetImage(MySqlDataReader reader)
-{
-    // Предполагаем, что изображение хранится в столбце с индексом 3
-    if (!reader.IsDBNull(3)) // Проверяем, есть ли данные в столбце
-    {
-        byte[] imageData = (byte[])reader[3]; // Получаем байты изображения
-        if (imageData != null && imageData.Length > 0) // Проверяем, что данные не пустые
+        public Bitmap GetImage(MySqlDataReader reader)
         {
-            try
+            if (!reader.IsDBNull(3)) // Проверяем, есть ли данные в столбце
             {
-                using (var stream = new MemoryStream(imageData))
+                byte[] imageData = (byte[])reader[3]; // Получаем байты изображения
+                if (imageData != null && imageData.Length > 0) // Проверяем, что данные не пустые
                 {
-                    return new Bitmap(stream); // Создаем Bitmap из потока
+                    try
+                    {
+                        using (var stream = new MemoryStream(imageData))
+                        {
+                            return new Bitmap(stream); // Создаем Bitmap из потока
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Ошибка при загрузке изображения: {ex.Message}");
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка при загрузке изображения: {ex.Message}");
-            }
-        }
-    }
-    return new Bitmap("Assets/logo.png"); // Возвращаем изображение по умолчанию, если данных нет
-}
-
-        private void PluseButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.CommandParameter is UserItemStorage userItemStorage)
-            {
-                // Логика для увеличения количества товара
-                userItemStorage.ItemCount++;
-                fff.ItemsSource = Products;
-                Console.WriteLine($"Увеличено количество: {userItemStorage.ItemArticul}, новое количество: {userItemStorage.ItemCount}");
-            }
+            return new Bitmap("Assets/logo.png"); // Возвращаем изображение по умолчанию, если данных нет
         }
 
-        private void MinuseButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveSelectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.CommandParameter is UserItemStorage userItemStorage)
+            // Получаем выбранные элементы
+            var selectedItems = fff.SelectedItems.Cast<UserItemStorage>().ToList();
+
+            // Выводим количество выбранных элементов
+            Console.WriteLine($"Количество выбранных элементов: {selectedItems.Count}");
+
+            // Получаем индексы выбранных элементов
+            var indicesToRemove = selectedItems
+                .Select(item => Products.IndexOf(item))
+                                .Where(index => index >= 0) // Убедимся, что индекс действителен
+                .OrderByDescending(index => index) // Сортируем индексы в обратном порядке
+                .ToList();
+
+            // Удаляем элементы по индексам
+            foreach (var index in indicesToRemove)
             {
-                // Логика для уменьшения количества товара
-                if (userItemStorage.ItemCount > 0)
-                {
-                    userItemStorage.ItemCount--;
-                    fff.ItemsSource = Products;
-                    Console.WriteLine($"Уменьшено количество: {userItemStorage.ItemArticul}, новое количество: {userItemStorage.ItemCount}");
-                }
+                Console.WriteLine($"Удаляем элемент с индексом: {index}");
+                Products.RemoveAt(index);
+                
+            }
+            Makelistt(Products);
+            // Обновляем источник данных для ListBox
+            Products = FillFromListic();
+
+            fff.ItemsSource = null; 
+            if(Products.Count>0) {
+                Console.WriteLine(Products.Count.ToString());
+            fff.ItemsSource =Products ;
+            }else {
+
+                Products.Clear(); // Если Products - это ObservableCollection или List
+                fff.ItemsSource = Products; // Обновляем ItemsSource
+                this.Hide();
+                new Orderr(Idd,Role,lll).Show();
+                this.Close();
+            }
+
+            
+             // Устанавливаем обновленный источник
+
+            // Если нужно, можно также обновить другие элементы интерфейса
+            Console.WriteLine($"Удалено {indicesToRemove.Count} элементов.");
+        }
+        public void Makelistt(List<UserItemStorage> products)
+        { List<string> madenList = new List<string>();
+            foreach(var item in products){
+                madenList.Add(item.ItemArticul);
+
+
+            }
+            foreach(var Item in products) Console.WriteLine(Item.ItemArticul.ToString());
+
+            lll = madenList;
+        }
+        private void SelectButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем кнопку, которая была нажата
+            var button = sender as Button;
+
+            // Получаем элемент, к которому принадлежит кнопка
+            var item = button.DataContext as UserItemStorage; // Замените на ваш тип данных
+
+            if (item != null)
+            {
+                // Устанавливаем выбранный элемент в ListBox
+                fff.SelectedItem = item;
+
+                // Выводим информацию о выбранном элементе
+                Console.WriteLine($"Выбранный элемент: {item.ItemName}, Цена: {item.ItemPrice}");
+                RemoveSelectedButton_Click(sender,e);
             }
         }
     }

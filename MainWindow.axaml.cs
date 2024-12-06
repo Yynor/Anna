@@ -20,14 +20,20 @@ namespace Market
         public int Role;
         public int Idd;
         public int? Scenary;
-       public MainWindow(int id,int role)
+        public List<string> listt = new List<string>();
+       public MainWindow(int id,int role,List<string> list)
        {
         
            InitializeComponent();
 
            Idd = id;
+           listt.AddRange(list);
+
            NameMaker();
            Scenary= scenary;
+            if(role == 1){
+                StoreBtn.IsVisible=false;
+            }
 
            
         if(scenary!=null)
@@ -74,7 +80,7 @@ namespace Market
         }
         public void NameMaker()
 {
-    string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
+    string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
     string fullName = "ФИО"; // Инициализируем с "ФИО"
 
     try
@@ -84,7 +90,7 @@ namespace Market
             connection.Open();
 
             // Используем параметризованный запрос
-            using (MySqlCommand command = new MySqlCommand("SELECT UserSurname, UserName, UserPatronymic FROM user WHERE UserID = @id", connection))
+            using (MySqlCommand command = new MySqlCommand("SELECT LastName, FirstName, MiddleName FROM Users WHERE ID = @id", connection))
             {
                 command.Parameters.AddWithValue("@id", Idd);
 
@@ -113,7 +119,8 @@ namespace Market
       private void ButtonStorage_Click(object sender, RoutedEventArgs e)
       {
         this.Hide();
-        new Orderr(Idd,Role,TakedItems).Show();
+        listt.AddRange(TakedItems);
+        new Orderr(Idd,Role,listt).Show();
         this.Close();
        }
         private async void fullUserNameTextBox_Pressed(object sender, PointerPressedEventArgs e)
@@ -135,7 +142,7 @@ namespace Market
         }
        public List<Product> ListCreate()
         {
-            string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
+            string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
             List<Product> list = new List<Product>();
 
             try

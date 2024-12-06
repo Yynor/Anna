@@ -12,6 +12,7 @@ namespace Market
 {
     public partial class ChangeItemWindow : Window
     {
+        public List<string> list = new List<string>();
         private Bitmap selectedImageBitmap = null;
         public string ProductArticl = null;
         public int Id = 0;
@@ -29,7 +30,7 @@ namespace Market
         }
         public void InputDataForRedaction()
         {
-            string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
+            string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
@@ -74,14 +75,15 @@ namespace Market
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
+            
             this.Hide();
-            new MainWindow(Id,Role1).Show();
+            new MainWindow(Id,Role1,list).Show();
             this.Close();
         }
 
         private void SaveProductSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
+            string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
@@ -128,7 +130,7 @@ namespace Market
 
                         command.ExecuteNonQuery();
                         this.Hide();
-                        new MainWindow(Id,Role1).Show();
+                        new MainWindow(Id,Role1,list).Show();
                         this.Close();
                     }
                 }

@@ -17,12 +17,12 @@
                         <Button x:Name="StoreBtn" Click="ButtonStorage_Click" Margin="0,0,30,0" Width="100" Height="30" Content="Корзина" HorizontalContentAlignment="Center"/>
                  </StackPanel >
                         
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,10,0,20">
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="20,10,0,20">
                         <TextBlock Text="По производителю" VerticalAlignment="Center" />
-                        <ComboBox Width="165" Margin="25,0, 25,0" x:Name="CBoxMaker" PlaceholderText="Все производители" SelectionChanged="CBoxMaker_SelectionChanged"/>
+                        <ComboBox Width="190" Margin="25,0, 25,0" x:Name="CBoxMaker" PlaceholderText="Все производители" SelectionChanged="CBoxMaker_SelectionChanged"/>
 
                         <TextBlock Text="По цене" VerticalAlignment="Center"/>
-                        <ComboBox Width="150" Margin=" 25,0, 25,0" x:Name="CBoxPrice" PlaceholderText="По умолчанию" SelectionChanged="CBoxPrice_SelectionChanged"/>
+                        <ComboBox Width="160" Margin=" 25,0, 25,0" x:Name="CBoxPrice" PlaceholderText="По умолчанию" SelectionChanged="CBoxPrice_SelectionChanged"/>
 
                  </StackPanel>
 
@@ -30,12 +30,12 @@
 
         
         
-        <ScrollViewer Margin="0,100,0,0">
+        <ScrollViewer Margin="0,120,0,0">
             <StackPanel>
                 <ListBox Name="fff">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="local:Product">
-                            <StackPanel Orientation="Horizontal" Margin="5">
+                            <StackPanel Orientation="Horizontal" Margin="5" Background="#76E383" >
                                 <Image Source="{Binding ProductPhoto}" Width="50" Height="50" Margin="5"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>

@@ -4,6 +4,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace Market;
 
@@ -13,22 +14,28 @@ public partial class LoginWindow : Window
     {
         InitializeComponent();
         LoginButton.Click += LoginButton_Click;
+        RegistrButton.Click += RegistrButton_Click;
     }
 
    private void LoginButton_Click(object? sender, RoutedEventArgs e)
 {
-    // Получаем текст из TextBox и убираем пробелы в начале и в конце
-    string loginText = LoginTextBox.Text.Trim();
-    string passwordText = PasswordTextBox.Text.Trim();
+    string log =" ";
+    string pass=null;
 
-    string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
+    try{
+   log = LoginTextBox.Text.Trim();
+    pass  = PasswordTextBox.Text.Trim();
+    }
+    catch (Exception ex){Console.WriteLine(ex.Message); }
+    if(log.Length>2 && pass.Length>2){
+    string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
     using (MySqlConnection connection = new MySqlConnection(connectionString))
     {
         connection.Open();
         
         // Используем параметризованный запрос
-        MySqlCommand command = new MySqlCommand("SELECT UserID,UserRole, UserPassword FROM user WHERE UserLogin = @login", connection);
-        command.Parameters.AddWithValue("@login", loginText);
+        MySqlCommand command = new MySqlCommand("SELECT ID,RoleID,Password FROM Users WHERE Login = @login", connection);
+        command.Parameters.AddWithValue("@login", log);
         
         using (MySqlDataReader reader = command.ExecuteReader())
         {
@@ -36,12 +43,12 @@ public partial class LoginWindow : Window
             {
                 // Получаем пароль из базы данных
                 string storedPassword = reader.GetString(2);
-
+                List<string> listt = new List<string>();
                 // Проверяем введенный пароль
-                if (passwordText == storedPassword)
+                if (pass == storedPassword)
                 {
                     Hide();
-                    new MainWindow(reader.GetInt32(0),reader.GetInt32(1)).Show();
+                    new MainWindow(reader.GetInt32(0),reader.GetInt32(1),listt).Show();
                     Close();
                 }
                 else
@@ -53,14 +60,19 @@ public partial class LoginWindow : Window
             {
                 Console.WriteLine("Пользователь не найден");
             }
+        
         }
+        
     }
+    }
+    else Console.WriteLine("sdsd");
 }
-
-    private async void MainWindowRegestrationTextBlockPressed(object sender, PointerPressedEventArgs e)
-        {
-          var RegWindow = new RegWindow();
+ 
+    private async void RegistrButton_Click(object? sender, RoutedEventArgs e){
+        var RegWindow = new RegWindow();
           await RegWindow.ShowDialog(this);
           
-       }
+
+    }
+    
 }

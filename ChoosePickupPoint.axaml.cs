@@ -22,20 +22,24 @@ namespace Market
 
         private void LoadAddresses()
         {
-            string connectionString = "Server=localhost;Database=shopDB;User Id=root;Password=;";
+            string connectionString = "Server=localhost;Database=Posuda;User Id=root;Password=;";
             List<AddressItem> addresses = new List<AddressItem>();
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                MySqlCommand command = new MySqlCommand("SELECT placeID, adres FROM placedelivery", connection);
+                MySqlCommand command = new MySqlCommand("SELECT ID, PostCode,City,Street,HouseNumber FROM DeliveryPoints", connection);
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         int id = reader.GetInt32(0);
-                        string address = reader.GetString(1);
-                        addresses.Add(new AddressItem { Id = id, Address = address });
+                        string postCode = Convert.ToString(reader.GetInt32(1));
+                        string address = reader.GetString(2);
+                        string city = reader.GetString(2);
+                        string street = reader.GetString(3);
+                        string houseNumber = reader.GetString(4);
+                        addresses.Add(new AddressItem { Id = id, Address = postCode+" "+address+" "+city+" "+street+" "+houseNumber });
                     }
                 }
             }

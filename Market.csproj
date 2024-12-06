@@ -20,6 +20,7 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <AvaloniaResource Include="Assets\logo.png" />
+    <AvaloniaResource Include="Assets\nlogo.png" />
     <AvaloniaResource Include="Fonts\Comic Sans MS.ttf" />
     <PackageReference Include="DialogHost.Avalonia" Version="0.8.1" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />

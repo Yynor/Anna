@@ -25,8 +25,17 @@
     </Window.Styles>
 
     <Grid>
-     <Grid>
-        <Image Source="avares://Market/Assets/logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="150"/>
+     <Grid> 
+        <Rectangle Fill="#76E383" Height="100" VerticalAlignment="Top"/>   
+        <Image Source="Assets/nlogo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="50" />
+         <TextBlock Grid.Column="0"
+            Grid.Row="0"
+            FontSize="70"
+            Text="Вход"
+            HorizontalAlignment="Center"
+            Margin="0,0,0,30"
+            FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"/>
+          
      </Grid>
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
@@ -42,13 +51,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <TextBlock Grid.Column="0"
-            Grid.Row="0"
-            FontSize="90"
-            Text="Вход"
-            HorizontalAlignment="Center"
-            Margin="0,0,0,30"
-            FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"/>
+       
         <TextBlock Grid.Column="0"
             Grid.Row="1"
             Text="Логин"
@@ -86,20 +89,8 @@
                  FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"/>
                   
         
-        <StackPanel Grid.Row="5" Orientation="Horizontal">
-            <TextBlock Margin="0,5,0,0" 
-                       Text="Продолжить как гость?" 
-                       HorizontalAlignment="Left"
-                       FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"/>
-            <TextBlock Margin="90,5,0,0" 
-                       Text="Зарегистрироваться." 
-                       HorizontalAlignment="Right"
-                       FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"
-                       PointerPressed = "MainWindowRegestrationTextBlockPressed"
-                       />
-        </StackPanel>
-        
-        <Button 
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button 
         x:Name="LoginButton"
         Margin="0,40,0,0" 
                 Grid.Column="0" 
@@ -108,12 +99,26 @@
                 Content="Войти" 
                 HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Center"
-                FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"
-        >
+                FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"/>
+        
+             <Button 
+        x:Name="RegistrButton"
+        Margin="30,40,0,0" 
+                Grid.Column="0" 
+                Grid.Row="7" 
+                Width="133" 
+                Content=" Зарегистрироваться" 
+                HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Center"
+                FontFamily = "avares://Market/Fonts/Comic Sans MS.ttf#Comic Sans MS"/>
+        
+        </StackPanel>
+        
+        
                 
                 
 
-                </Button>
+              
     </Grid>
  </Grid>
 </Window>

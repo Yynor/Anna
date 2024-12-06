@@ -15,30 +15,33 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Market
-build_property.ProjectDir = /Users/new/Desktop/Projects/Market/
+build_property.ProjectDir = /Users/new/Desktop/Anna/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[/Users/new/Desktop/Projects/Market/App.axaml]
+[/Users/new/Desktop/Anna/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/ChangeItemWindow.axaml]
+[/Users/new/Desktop/Anna/ChangeItemWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/ChoosePickupPoint.axaml]
+[/Users/new/Desktop/Anna/ChoosePickupPoint.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/LoginWindow.axaml]
+[/Users/new/Desktop/Anna/LoginWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/MainWindow.axaml]
+[/Users/new/Desktop/Anna/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/MBoxExitAsc.axaml]
+[/Users/new/Desktop/Anna/MBoxExitAsc.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/Orderr.axaml]
+[/Users/new/Desktop/Anna/OrderConfirmWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/new/Desktop/Projects/Market/RegWindow.axaml]
+[/Users/new/Desktop/Anna/Orderr.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/new/Desktop/Anna/RegWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
